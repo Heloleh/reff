@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Education Platform{% endblock %}</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="bg-gray-100 font-sans">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'dashboard' %}" class="text-2xl font-bold">Education Platform</a>
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="text-white">Logged in as: {{ user.username }}</span>
+                    <a href="{% url 'logout' %}" class="px-4 hover:underline">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="px-4 hover:underline">Login</a>
+                    <a href="{% url 'signup' %}" class="px-4 hover:underline">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto p-6">
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="bg-{% if message.tags == 'success' %}green-100{% else %}red-100{% endif %} p-4 rounded text-{% if message.tags == 'success' %}green-700{% else %}red-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

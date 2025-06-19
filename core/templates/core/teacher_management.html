@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Manage Teachers{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Manage Teachers</h1>
+<div class="bg-white p-6 rounded-lg shadow">
+    {% for teacher in teachers %}
+        <div class="mb-4 p-4 border rounded">
+            <p>{{ teacher.user.username }} - Approved: {{ teacher.is_approved|yesno:"Yes,No" }}</p>
+            <form method="post" class="mt-2">
+                {% csrf_token %}
+                <input type="hidden" name="teacher_id" value="{{ teacher.id }}">
+                {% if not teacher.is_approved %}
+                    <button type="submit" name="action" value="approve" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">Approve</button>
+                {% endif %}
+                <button type="submit" name="action" value="delete" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No teachers to manage.</p>
+    {% endfor %}
+</div>
+{% endblock %}

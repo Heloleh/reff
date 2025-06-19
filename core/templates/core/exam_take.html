@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Take Exam - {{ course.name }}{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Take Exam: {{ course.name }}</h1>
+<div class="bg-white p-6 rounded-lg shadow">
+    <form method="post">
+        {% csrf_token %}
+        {% for question in questions %}
+            <div class="mb-6">
+                <p class="font-bold">{{ forloop.counter }}. {{ question.text }} ({{ question.marks }} marks)</p>
+                <div class="ml-4">
+                    <label><input type="radio" name="question_{{ question.id }}" value="1" required> {{ question.option1 }}</label><br>
+                    <label><input type="radio" name="question_{{ question.id }}" value="2"> {{ question.option2 }}</label><br>
+                    <label><input type="radio" name="question_{{ question.id }}" value="3"> {{ question.option3 }}</label><br>
+                    <label><input type="radio" name="question_{{ question.id }}" value="4"> {{ question.option4 }}</label>
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit Exam</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Student Progress - {{ course.name }}{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Student Progress for {{ course.name }}</h1>
+<div class="bg-white p-6 rounded-lg shadow">
+    {% if students_progress %}
+        <table class="w-full text-left">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-2">Student</th>
+                    <th class="p-2">Total Score</th>
+                    <th class="p-2">Max Score</th>
+                    <th class="p-2">Progress (%)</th>
+                    <th class="p-2">Attempts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student, data in students_progress.items %}
+                    <tr class="border-b">
+                        <td class="p-2">{{ student.username }}</td>
+                        <td class="p-2">{{ data.total_score }}</td>
+                        <td class="p-2">{{ data.max_score }}</td>
+                        <td class="p-2">{{ data.progress|floatformat:2 }}%</td>
+                        <td class="p-2">{{ data.attempts }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No student progress available.</p>
+    {% endif %}
+</div>
+<a href="{% url 'course_list' %}" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Back to Courses</a>
+{% endblock %}

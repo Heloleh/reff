@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Manage Students{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Manage Students</h1>
+<div class="bg-white p-6 rounded-lg shadow">
+    {% for student in students %}
+        <div class="mb-4 p-4 border rounded">
+            <p>{{ student.username }}</p>
+            <form method="post" class="mt-2">
+                {% csrf_token %}
+                <input type="hidden" name="student_id" value="{{ student.id }}">
+                <button type="submit" name="action" value="delete" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No students to manage.</p>
+    {% endfor %}
+</div>
+{% endblock %}

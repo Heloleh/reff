@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Questions for {{ course.name }}{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Questions for {{ course.name }}</h1>
+<div class="bg-white p-6 rounded-lg shadow">
+    {% for question in questions %}
+        <div class="mb-4 p-4 border rounded">
+            <p class="font-bold">{{ question.text }} ({{ question.marks }} marks)</p>
+            <p>Options: {{ question.option1 }}, {{ question.option2 }}, {{ question.option3 }}, {{ question.option4 }}</p>
+            <p>Correct Option: {{ question.correct_option }}</p>
+            <form method="post" action="{% url 'question_list' course.id %}" class="mt-2">
+                {% csrf_token %}
+                <input type="hidden" name="question_id" value="{{ question.id }}">
+                <button type="submit" name="action" value="delete" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No questions available.</p>
+    {% endfor %}
+</div>
+<a href="{% url 'create_question' course.id %}" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add New Question</a>
+{% endblock %}

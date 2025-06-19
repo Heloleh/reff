@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Results - {{ course.name }}{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Exam Results: {{ course.name }}</h1>
+<div class="bg-white p-6 rounded-lg shadow">
+    {% for attempt in attempts %}
+        <p>Date: {{ attempt.date_taken }} - Score: {{ attempt.score }}</p>
+    {% empty %}
+        <p>No results available. Take the exam to see your score.</p>
+    {% endfor %}
+</div>
+<a href="{% url 'take_exam' course.id %}" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Take Exam Again</a>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Add Question to {{ course.name }}{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Add Question to {{ course.name }}</h1>
+<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow">
+    <form method="post">
+        {% csrf_token %}
+        {% load widget_tweaks %}
+        {% for field in form %}
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:"w-full p-2 border rounded" }}
+                {% if field.errors %}
+                    <p class="text-red-600">{{ field.errors }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">Add Question</button>
+    </form>
+</div>
+{% endblock %}

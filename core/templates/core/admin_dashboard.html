@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white p-6 rounded-lg shadow card">
+        <h3 class="text-lg font-bold">Students</h3>
+        <p class="text-3xl">{{ student_count }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow card">
+        <h3 class="text-lg font-bold">Teachers</h3>
+        <p class="text-3xl">{{ teacher_count }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow card">
+        <h3 class="text-lg font-bold">Courses</h3>
+        <p class="text-3xl">{{ course_count }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow card">
+        <h3 class="text-lg font-bold">Questions</h3>
+        <p class="text-3xl">{{ question_count }}</p>
+    </div>
+</div>
+<div class="flex space-x-4">
+    <a href="{% url 'create_course' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Create Course</a>
+    <a href="{% url 'teacher_management' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Manage Teachers</a>
+    <a href="{% url 'student_management' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Manage Students</a>
+    <a href="{% url 'course_list' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Courses</a>
+</div>
+{% endblock %}

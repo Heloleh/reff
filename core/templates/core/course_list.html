@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Course List{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Courses</h1>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {% for course in courses %}
+        <div class="bg-white p-6 rounded-lg shadow card">
+            <h3 class="text-xl font-bold">{{ course.name }}</h3>
+            <p class="text-gray-600">{{ course.description }}</p>
+            {% if user.is_superuser or user.teacher.is_approved %}
+                <a href="{% url 'question_list' course.id %}" class="mt-4 inline-block bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Manage Questions</a>
+                <a href="{% url 'student_progress' course.id %}" class="mt-2 inline-block bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">View Student Progress</a>
+            {% endif %}
+            {% if not user.teacher %}
+                <a href="{% url 'take_exam' course.id %}" class="mt-4 inline-block bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Take Exam</a>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No courses available.</p>
+    {% endfor %}
+</div>
+{% if user.is_superuser or user.teacher.is_approved %}
+    <a href="{% url 'create_course' %}" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Create New Course</a>
+{% endif %}
+{% endblock %}
